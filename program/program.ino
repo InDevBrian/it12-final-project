@@ -13,17 +13,13 @@ void setup() {
   tft.begin();
 }
 
-long rgb(int red, int green, int blue) {
-  int bin[16], i;
-  long number, tRed, tGreen, tBlue;
+int rgb(int red, int green, int blue) {
+  int bin[16], i, tRed, tGreen, tBlue;
+  double number;
 
   tRed = red * 31 / 255;
   tGreen = green * 63 / 255;
   tBlue = blue * 31 / 255;
-
-  tRed = static_cast<int>(tRed);
-  tGreen = static_cast<int>(tGreen);
-  tBlue = static_cast<int>(tBlue);
 
   for (i=0; i<16; i++) {
     if (i<5) {
@@ -45,7 +41,6 @@ long rgb(int red, int green, int blue) {
   number = 0;
 
   for (i=0; i<16; i++) {
-    Serial.println(number);
     number = number + pow(bin[i]*2, i);
   }
 
