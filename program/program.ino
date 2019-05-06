@@ -11,6 +11,7 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 void setup() {
   Serial.begin(9600);
   tft.begin();
+  tft.fillScreen(rgb(255, 255, 255));
 }
 
 int rgb(int red, int green, int blue) {
@@ -48,7 +49,7 @@ int rgb(int red, int green, int blue) {
 }
 
 void loop(void) {
-  test();
+  joystickTest();
 }
 
 unsigned long test() {
@@ -62,4 +63,27 @@ unsigned long test() {
   delay(1000);
   tft.fillScreen(rgb(0, 0, 0));
   delay(1000);
+}
+
+/*
+  * X is inline with the pins, 0 is towards, 1021 is other way 514 is idle
+  * Y is Perpindicular to pins, 0 is towards power pins, 1021 is sw pin, 516 is idle
+*/
+
+int xPos = 0;
+int yPos = 0;
+
+unsigned long joystickTest() {
+  int dx = analogRead(0)-514;
+  int dy = analogRead(1)-516;
+  dx = dx / 300;
+  dy = dy / 300;
+  ::xPos = ::xPos + dx;
+  ::yPos = ::yPos + dy;
+  int swVal = analogRead(2);
+
+  tft.fillCircle(::xPos-dx, ::yPos-dy, 5, rgb(255, 255, 255));
+  tft.fillCircle(::xPos, ::yPos, 5, rgb(255, 0, 0));
+
+  delay(5);
 }
