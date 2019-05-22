@@ -34,16 +34,6 @@ unsigned long snake() {
     snakeDirection = 3;
   }
 
-  if ( right == 1022 ) {
-    snakeDirection = 1;
-  }
-  if ( up == 1022 ) {
-    snakeDirection = 0;
-  }
-  if ( down == 1022 ) {
-    snakeDirection = 2;
-  }
-
   switch(snakeDirection) {
       case 0 : ::headY = ::headY - 1; break;
       case 1 : ::headX = ::headX + 1; break;
