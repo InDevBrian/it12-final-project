@@ -8,11 +8,11 @@ unsigned long snakeRender() {
   for ( int x = 0; x < 15; x++ ) {
     for ( int y = 0; y < 20; y++ ) {
       if (board[x][y] == 0) {
-        tft.fillRect(x*16+1, y*16+1, 14, 14, 0xFFFF);
+        tft.fillRect(x*16+1, y*16+1, 14, 14, 65535);
       } else if ( board[x][y] == 1 ) {
-        tft.fillRect(x*16+1, y*16+1, 14, 14, 0xF000);
+        tft.fillRect(x*16+1, y*16+1, 14, 14, 61440);
       } else {
-        tft.fillRect(x*16+1, y*16+1, 14, 14, rgb(0, 255, 0));
+        tft.fillRect(x*16+1, y*16+1, 14, 14, 2016);
       }
     }
   }
