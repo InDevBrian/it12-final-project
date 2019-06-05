@@ -2,6 +2,7 @@ int boardDirections [12][16];
 int snakeBody [100][2] = { {8, 8}, {8, 9} };
 int food [2] = { rand() % 12, rand() % 16 };
 int newGhost [2];
+int score [3] = { 48, 48, 49 };
 
 int firstRender = 1;
 int snakeDirection = 0;
@@ -65,6 +66,18 @@ unsigned long checkGame() {
     ateFood = 1;
 
     snakeLength++;
+
+    if ( score[2] < 57 ) {
+      score[2] ++;
+    } else {
+      score[2] = 48;
+      if ( score[1] < 57 ) {
+        score[1] ++;
+      } else {
+        score[1] = 48;
+        score[0] ++;
+      }
+    }
   }
 }
 
@@ -104,5 +117,11 @@ unsigned long snake() {
     delay(500);
   } else {
     tft.fillScreen(61440);
+
+    tft.drawChar(15, 100, score[0], 0, 65535, 12);
+    tft.drawChar(85, 100, score[1], 0, 65535, 12);
+    tft.drawChar(155, 100, score[2], 0, 65535, 12);
+
+    delay(100000);
   }
 }
