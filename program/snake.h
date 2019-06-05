@@ -4,6 +4,7 @@ int snakeBody [100][2] = { {8, 8}, {8, 9}, {8, 10} };
 int firstRender = 1;
 int snakeDirection = 0;
 int snakeLength = 3;
+int gameOver = 0;
 
 unsigned long snakeRender() {
   if ( firstRender == 1 ) {
@@ -18,7 +19,7 @@ unsigned long snakeRender() {
 
   tft.fillRect(snakeBody[0][0]*20+2, snakeBody[0][1]*20+2, 16, 16, 61440);
 
-  for ( int p = 1; p < snakeLength-1; p++ ) {
+  for ( int p = 1; p < snakeLength - 1; p++ ) {
     int x = snakeBody[p][0];
     int y = snakeBody[p][1];
     
@@ -37,29 +38,48 @@ unsigned long snakeMove(int a, int d) {
   }
 }
 
+unsigned long checkLose() {
+  for ( int p = 1; p < snakeLength - 1; p++ ) {
+    if ( snakeBody[0][0] == snakeBody[p][0] && snakeBody[0][1] == snakeBody[p][1] ) {
+      gameOver = 1;
+    }
+  }
+
+  if ( snakeBody[0][0] == -1 || snakeBody[0][0] == 12 || snakeBody[0][1] == -1 || snakeBody[0][1] == 16 ) {
+    gameOver = 1;
+  }
+}
+
 unsigned long snake() {
-  int up = analogRead(0);
-  int down = analogRead(1);
-  int left = analogRead(2);
-  int right = analogRead(3);
 
-  if ( (up == 1022) && (snakeDirection != 2) ) {
-    snakeDirection = 0;
-  } else if ( (right == 1022) && (snakeDirection != 3) ) {
-    snakeDirection = 1;
-  } else if ( (down == 1022) && (snakeDirection != 0) ) {
-    snakeDirection = 2;
-  } else if ( (left == 1022) && (snakeDirection != 1) ) {
-    snakeDirection = 3;
+  if ( gameOver == 0 ) {
+    int up = analogRead(0);
+    int down = analogRead(1);
+    int left = analogRead(2);
+    int right = analogRead(3);
+
+    if ( (up == 1022) && (snakeDirection != 2) ) {
+      snakeDirection = 0;
+    } else if ( (right == 1022) && (snakeDirection != 3) ) {
+      snakeDirection = 1;
+    } else if ( (down == 1022) && (snakeDirection != 0) ) {
+      snakeDirection = 2;
+    } else if ( (left == 1022) && (snakeDirection != 1) ) {
+      snakeDirection = 3;
+    }
+
+    boardDirections[snakeBody[0][0]][snakeBody[0][1]] = snakeDirection;
+
+    for (int b = 0; b < 100; b++) {
+      snakeMove(b, boardDirections[snakeBody[b][0]][snakeBody[b][1]]);
+    }
+
+    snakeRender();
+
+    checkLose();
+
+    delay(500);
+  } else {
+    tft.fillScreen(61440);
   }
-
-  boardDirections[snakeBody[0][0]][snakeBody[0][1]] = snakeDirection;
-
-  for (int b = 0; b < 15; b++) {
-    snakeMove(b, boardDirections[snakeBody[b][0]][snakeBody[b][1]]);
-  }
-
-  snakeRender();
-
-  delay(500);
 }
