@@ -1,11 +1,11 @@
 int boardDirections [12][16];
-int snakeBody [100][2] = { {8, 8}, {8, 9}, {8, 10} };
+int snakeBody [100][2] = { {8, 8}, {8, 9} };
 int food [2] = { rand() % 12, rand() % 16 };
 int newGhost [2];
 
 int firstRender = 1;
 int snakeDirection = 0;
-int snakeLength = 2;
+int snakeLength = 1;
 int gameOver = 0;
 int ateFood = 0;
 
