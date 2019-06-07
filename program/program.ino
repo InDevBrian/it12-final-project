@@ -5,6 +5,11 @@
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
+int a, b = 0;
+int x = 120;
+int y = 160;
+
+#include "inputs.h"
 #include "functions.h"
 #include "snake.h"
 #include "draw.h"
