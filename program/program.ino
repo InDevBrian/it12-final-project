@@ -8,13 +8,14 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 #include "functions.h"
 #include "snake.h"
 #include "draw.h"
+#include "menu.h"
 
 void setup() {
   Serial.begin(9600);
   tft.begin();
-  tft.fillScreen(0);
+  menuInit();
 }
 
 void loop(void) {
-  snake();
+  menu();
 }

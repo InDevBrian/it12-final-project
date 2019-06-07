@@ -1,5 +1,3 @@
-int xPos = 120;
-int yPos = 160;
 int colours[10] = {
   rgb(255, 0, 0),
   rgb(255, 150, 0),
@@ -12,7 +10,11 @@ int colours[10] = {
   rgb(255, 255, 255),
   rgb(0, 0, 0)
 };
+
 int colourIndex = 0;
+
+int x = 120;
+int y = 160;
 
 unsigned long draw() {
   /*
@@ -21,36 +23,28 @@ unsigned long draw() {
   */
   int dx = analogRead(0)-514;
   int dy = analogRead(1)-516;
-  int left = digitalRead(8);
-  int up = digitalRead(4);
-  int right = digitalRead(7);
-  int down = digitalRead(12);
-  int middle = digitalRead(2);
+  int cleft = analogRead(5);
+  int cright = analogRead(4);
+  int rs = analogRead(2);
 
-  if (left == 1) {
+  if (cleft > 1000) {
     delay (150);
-    if (left == 1) {
-      ::colourIndex = ::colourIndex - 1;
-    }
+    colourIndex = colourIndex - 1;
   }
-  if (right == 1) {
+  if (cright > 1000) {
     delay (150);
-    if (right == 1) {
-      ::colourIndex = ::colourIndex + 1; delay(150);
-    }
+    colourIndex = colourIndex + 1;
   }
-  int color = ::colours[::colourIndex];
-  dx = dx / 300;
-  dy = dy / 300;
-  ::xPos = ::xPos + dx;
-  ::yPos = ::yPos + dy;
+  int color = colours[colourIndex];
+  x += dx / 300;
+  y += dy / 300;
 
-  tft.fillCircle(::xPos-dx, ::yPos-dy, 5, color);
-  tft.fillCircle(::xPos, ::yPos, 5, color);
+  tft.fillCircle(x-dx/300, y-dy/300, 5, color);
+  tft.fillCircle(x, y, 5, color);
 
   delay(5);
 
-  if (middle == 1) {
-    //tft.fillScreen(rgb(255, 255, 255));
+  if (rs > 1000) {
+    tft.fillScreen(rgb(255, 255, 255));
   }
 }

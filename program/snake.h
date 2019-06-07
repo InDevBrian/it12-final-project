@@ -10,8 +10,9 @@ int snakeLength = 1;
 int gameOver = 0;
 int ateFood = 0;
 
-unsigned long gameRender() {
+void gameRender() {
   if ( firstRender == 1 ) {
+    tft.fillScreen(0);
     for ( int x = 0; x < 12; x++ ) {
       for ( int y = 0; y < 16; y++ ) {
         tft.fillRect(x*20+2, y*20+2, 16, 16, rgb(255, 255, 255));
@@ -34,7 +35,7 @@ unsigned long gameRender() {
   tft.fillRect(food[0]*20+2, food[1]*20+2, 16, 16, rgb(0, 0, 0));
 }
 
-unsigned long snakeMove(int a, int d) {
+void snakeMove(int a, int d) {
   switch( d ) {
     case 0 : snakeBody[a][1] -= 1; break;
     case 1 : snakeBody[a][0] += 1; break;
@@ -43,15 +44,17 @@ unsigned long snakeMove(int a, int d) {
   }
 }
 
-unsigned long checkGame() {
+void checkGame() {
   for ( int p = 1; p < snakeLength; p++ ) {
     if ( snakeBody[0][0] == snakeBody[p][0] && snakeBody[0][1] == snakeBody[p][1] ) {
       gameOver = 1;
+      firstRender = 1;
     }
   }
 
   if ( snakeBody[0][0] == -1 || snakeBody[0][0] == 12 || snakeBody[0][1] == -1 || snakeBody[0][1] == 16 ) {
     gameOver = 1;
+    firstRender = 1;
   }
 
   if ( snakeBody[0][0] == food[0] && snakeBody[0][1] == food[1] ) {
@@ -81,9 +84,9 @@ unsigned long checkGame() {
   }
 }
 
-unsigned long snake() {
+void snake() {
   int rs = analogRead(2);
-  if (rs == 1022) {
+  if (rs > 1000) {
     tft.fillScreen(0);
     snakeBody[0][0] = 8;
     snakeBody[0][1] = 8;
@@ -136,7 +139,7 @@ unsigned long snake() {
     checkGame();
 
     delay(300);
-  } else {
+  } else if ( firstRender == 1 ) {
     tft.fillScreen(61440);
 
     tft.drawChar(15, 100, score[0], 0, 65535, 12);
