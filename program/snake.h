@@ -1,6 +1,6 @@
 int boardDirections [12][16];
 int snakeBody [192][2] = { {8, 8}, {8, 9} };
-int food [2] = { rand() % 12, rand() % 16 };
+int food [2] = { random(11), random(0, 15) };
 int newGhost [2];
 int score [3] = { 48, 48, 49 };
 
@@ -58,8 +58,16 @@ void checkGame() {
   }
 
   if ( snakeBody[0][0] == food[0] && snakeBody[0][1] == food[1] ) {
-    food[0] = rand() % 12;
-    food[1] = rand() % 16;
+    randomSeed(analogRead(0));
+    food[0] = random(11);
+    food[1] = random(15);
+    for (int n = 0; n < snakeLength; n++) {
+      if (food[0] == snakeBody[n][0] && food[1] == snakeBody[n][1]) {
+        food[0] = random(11);
+        food[1] = random(15);
+        n = 0;
+      }
+    }
 
     gameRender();
 
@@ -88,19 +96,19 @@ void snake() {
   int rs = analogRead(2);
   if (rs > 1000) {
     tft.fillScreen(0);
-    snakeBody[0][0] = 8;
-    snakeBody[0][1] = 8;
-    snakeBody[1][0] = 8;
-    snakeBody[1][1] = 9;
     score[0] = 48;
     score[1] = 48;
     score[2] = 49;
-    for (int n = 2; n < snakeLength; n++) {
+    for (int n = 0; n < snakeLength+1; n++) {
       snakeBody[n][0] = 0;
       snakeBody[n][1] = 0;
       boardDirections[n][0] = 0;
       boardDirections[n][1] = 0;
     }
+    snakeBody[0][0] = 8;
+    snakeBody[0][1] = 8;
+    snakeBody[1][0] = 8;
+    snakeBody[1][1] = 9;
     firstRender = 1;
     snakeDirection = 0;
     snakeLength = 1;
@@ -145,5 +153,7 @@ void snake() {
     tft.drawChar(15, 100, score[0], 0, 65535, 12);
     tft.drawChar(85, 100, score[1], 0, 65535, 12);
     tft.drawChar(155, 100, score[2], 0, 65535, 12);
+
+    firstRender = 0;
   }
 }
