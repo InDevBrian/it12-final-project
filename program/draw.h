@@ -14,15 +14,16 @@ int colours[10] = {
 int colourIndex = 0;
 
 unsigned long draw() {
-  updateInput();
-  if (b4 > 1000) {
-    delay (150);
-    colourIndex = colourIndex - 1;
+  if ( b4 > 1000 && dy < 300 ) { colourIndex = colourIndex - 1; delay(175); }
+
+  if ( b3 > 1000 && dy < 300 ) { colourIndex = colourIndex + 1; delay(175); }
+
+  if ( colourIndex == 10) {
+    colourIndex = 0;
+  } else if ( colourIndex == -1 ) {
+    colourIndex = 9;
   }
-  if (b3 > 1000) {
-    delay (150);
-    colourIndex = colourIndex + 1;
-  }
+
   int color = colours[colourIndex];
   x += dx / 300;
   y += dy / 300;
@@ -32,7 +33,5 @@ unsigned long draw() {
 
   delay(5);
 
-  if (b1 > 1000) {
-    tft.fillScreen(rgb(255, 255, 255));
-  }
+  if ( b1 > 1000 && dy < 300 ) { tft.fillScreen(rgb(255, 255, 255)); }
 }

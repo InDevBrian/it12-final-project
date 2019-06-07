@@ -5,20 +5,29 @@ void menuInit() {
   tft.fillRect(30, 170, 180, 120, rgb(255, 255, 255));
 }
 
+void checkCont() {
+  updateInput();
+
+  if ( b2 > 1000 && dy < 300 ) {
+    cont = false;
+  }
+}
+
 void menu() {
   updateInput();
-  int b2 = analogRead(3);
 
-  if (b2 > 1000) {
+  if ( b2 > 1000 && dy < 300 ) {
     menuInit();
   }
 
-  if ( b1 > 1000 ) {
+  if ( b1 > 1000 && dy < 300 ) {
     if (x > 30 && x < 210) {
       if (y > 30 && y < 150) {
-        while (b2 < 1000) { snake(); b2 = analogRead(3);}
+        cont = true;
+        while ( cont ) { checkCont(); snake(); }
       } else if (y > 170 && y < 290) {
-        while (b2 < 1000) { draw(); b2 = analogRead(3);}
+        cont = true;
+        while ( cont ) { checkCont(); draw(); }
       }
     }
   }

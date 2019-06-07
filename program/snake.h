@@ -93,8 +93,7 @@ void checkGame() {
 }
 
 void snake() {
-  updateInput();
-  if (b1 > 1000) {
+  if ( b1 > 1000 && dy < 300 ) {
     tft.fillScreen(0);
     score[0] = 48;
     score[1] = 48;
@@ -117,8 +116,6 @@ void snake() {
   }
 
   if ( gameOver == 0 ) {
-    
-
     if ( (dy < -200) && (snakeDirection != 2) ) {
       snakeDirection = 0;
     } else if ( (dx > 200) && (snakeDirection != 3) ) {
