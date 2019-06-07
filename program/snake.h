@@ -144,11 +144,11 @@ void snake() {
 
     delay(300);
   } else if ( firstRender == 1 ) {
-    tft.fillScreen(61440);
+    tft.fillScreen(rgb(255, 0, 0));
 
-    tft.drawChar(15, 100, score[0], 0, 65535, 12);
-    tft.drawChar(85, 100, score[1], 0, 65535, 12);
-    tft.drawChar(155, 100, score[2], 0, 65535, 12);
+    tft.drawChar(15, 100, score[0], 0, rgb(255, 255, 255), 12);
+    tft.drawChar(85, 100, score[1], 0, rgb(255, 255, 255), 12);
+    tft.drawChar(155, 100, score[2], 0, rgb(255, 255, 255), 12);
 
     firstRender = 0;
   }

@@ -3,6 +3,19 @@ void menuInit() {
 
   tft.fillRect(30, 30, 180, 120, rgb(255, 255, 255));
   tft.fillRect(30, 170, 180, 120, rgb(255, 255, 255));
+
+  //snake
+  tft.drawChar(40, 60, 83, 0, rgb(255, 255, 255), 5);
+  tft.drawChar(70, 60, 78, 0, rgb(255, 255, 255), 5);
+  tft.drawChar(100, 60, 65, 0, rgb(255, 255, 255), 5);
+  tft.drawChar(130, 60, 75, 0, rgb(255, 255, 255), 5);
+  tft.drawChar(160, 60, 69, 0, rgb(255, 255, 255), 5);
+
+  //draw
+  tft.drawChar(40, 200, 68, 0, rgb(255, 255, 255), 5);
+  tft.drawChar(70, 200, 82, 0, rgb(255, 255, 255), 5);
+  tft.drawChar(100, 200, 65, 0, rgb(255, 255, 255), 5);
+  tft.drawChar(130, 200, 87, 0, rgb(255, 255, 255), 5);
 }
 
 void checkCont() {
