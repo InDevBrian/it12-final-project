@@ -22,8 +22,6 @@ void gameRender() {
     firstRender = 0;
   }
 
-  tft.fillRect(snakeBody[0][0]*20+2, snakeBody[0][1]*20+2, 16, 16, rgb(255, 0, 0));
-
   for ( a = 1; a < snakeLength; a++ ) {
     int x = snakeBody[a][0];
     int y = snakeBody[a][1];
@@ -32,6 +30,7 @@ void gameRender() {
   }
 
   tft.fillRect(snakeBody[snakeLength][0]*20+2, snakeBody[snakeLength][1]*20+2, 16, 16, rgb(255, 255, 255));
+  tft.fillRect(snakeBody[0][0]*20+2, snakeBody[0][1]*20+2, 16, 16, rgb(255, 0, 0));
   tft.fillRect(food[0]*20+2, food[1]*20+2, 16, 16, rgb(0, 0, 0));
 }
 
@@ -128,7 +127,7 @@ void snake() {
 
     boardDirections[snakeBody[0][0]][snakeBody[0][1]] = snakeDirection;
 
-    for ( a = 0; a < snakeLength + 1; a++ ) {
+    for ( a = snakeLength; a > -1; a-- ) {
       snakeMove(a, boardDirections[snakeBody[a][0]][snakeBody[a][1]]);
     }
 
