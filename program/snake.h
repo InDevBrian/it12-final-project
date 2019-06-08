@@ -1,4 +1,3 @@
-int boardDirections [12][16];
 int snakeBody [192][2] = { {8, 8}, {8, 9} };
 int food [2] = { random(11), random(0, 15) };
 int newGhost [2];
@@ -32,15 +31,6 @@ void gameRender() {
   tft.fillRect(snakeBody[snakeLength][0]*20+2, snakeBody[snakeLength][1]*20+2, 16, 16, rgb(255, 255, 255));
   tft.fillRect(snakeBody[0][0]*20+2, snakeBody[0][1]*20+2, 16, 16, rgb(255, 0, 0));
   tft.fillRect(food[0]*20+2, food[1]*20+2, 16, 16, rgb(0, 0, 0));
-}
-
-void snakeMove(int a, int b) {
-  switch( b ) {
-    case 0 : snakeBody[a][1] -= 1; break;
-    case 1 : snakeBody[a][0] += 1; break;
-    case 2 : snakeBody[a][1] += 1; break;
-    case 3 : snakeBody[a][0] -= 1; break;
-  }
 }
 
 void checkGame() {
@@ -100,8 +90,6 @@ void snake() {
     for ( a = 0; a < snakeLength+1; a++ ) {
       snakeBody[a][0] = 0;
       snakeBody[a][1] = 0;
-      boardDirections[a][0] = 0;
-      boardDirections[a][1] = 0;
     }
     snakeBody[0][0] = 8;
     snakeBody[0][1] = 8;
@@ -125,10 +113,16 @@ void snake() {
       snakeDirection = 3;
     }
 
-    boardDirections[snakeBody[0][0]][snakeBody[0][1]] = snakeDirection;
+    for ( a = snakeLength; a > 0; a-- ) {
+      snakeBody[a][0] = snakeBody[a-1][0];
+      snakeBody[a][1] = snakeBody[a-1][1];
+    }
 
-    for ( a = snakeLength; a > -1; a-- ) {
-      snakeMove(a, boardDirections[snakeBody[a][0]][snakeBody[a][1]]);
+    switch( snakeDirection ) {
+      case 0 : snakeBody[0][1] -= 1; break;
+      case 1 : snakeBody[0][0] += 1; break;
+      case 2 : snakeBody[0][1] += 1; break;
+      case 3 : snakeBody[0][0] -= 1; break;
     }
 
     if ( ateFood == 1 ) {
