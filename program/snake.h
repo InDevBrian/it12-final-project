@@ -21,15 +21,9 @@ void gameRender() {
     firstRender = 0;
   }
 
-  for ( a = 1; a < snakeLength; a++ ) {
-    int x = snakeBody[a][0];
-    int y = snakeBody[a][1];
-    
-    tft.fillRect(x*20+2, y*20+2, 16, 16, rgb(0, 255, 0));
-  }
-
-  tft.fillRect(snakeBody[snakeLength][0]*20+2, snakeBody[snakeLength][1]*20+2, 16, 16, rgb(255, 255, 255));
   tft.fillRect(snakeBody[0][0]*20+2, snakeBody[0][1]*20+2, 16, 16, rgb(255, 0, 0));
+  tft.fillRect(snakeBody[1][0]*20+2, snakeBody[1][1]*20+2, 16, 16, rgb(0, 255, 0));
+  tft.fillRect(snakeBody[snakeLength][0]*20+2, snakeBody[snakeLength][1]*20+2, 16, 16, rgb(255, 255, 255));
   tft.fillRect(food[0]*20+2, food[1]*20+2, 16, 16, rgb(0, 0, 0));
 }
 
