@@ -1,13 +1,11 @@
 int snakeBody [192][2] = {{8, 8}, {8, 9}};
 int food [2] = {random(11), random(0, 15)};
-int newGhost [2];
 int score [3] = {48, 48, 49};
 
 int firstRender = 1;
 int snakeDirection = 0;
 int snakeLength = 1;
 int gameOver = 0;
-int ateFood = 0;
 
 void gameRender() {
   if (firstRender == 1) {
@@ -54,11 +52,6 @@ void checkGame() {
 
     gameRender();
 
-    newGhost[0] = snakeBody[snakeLength][0];
-    newGhost[1] = snakeBody[snakeLength][1];
-
-    ateFood = 1;
-
     snakeLength++;
 
     if (score[2] < 57) {
@@ -93,7 +86,6 @@ void snake() {
     snakeDirection = 0;
     snakeLength = 1;
     gameOver = 0;
-    ateFood = 0;
   }
 
   if (gameOver == 0) {
@@ -118,12 +110,6 @@ void snake() {
       case 2 : snakeBody[0][1] += 1; break;
       case 3 : snakeBody[0][0] -= 1; break;
     }
-
-    if (ateFood == 1) {
-      ateFood = 0;
-      snakeBody[snakeLength][0] = newGhost[0];
-      snakeBody[snakeLength][1] = newGhost[1];
-    } 
 
     gameRender();
 
