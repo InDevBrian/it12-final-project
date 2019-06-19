@@ -9,7 +9,7 @@ void updateInput() {
   dx = analogRead(0)-514;
   dy = analogRead(1)-516;
   b1 = analogRead(2);
-  b2 = analogRead(3);
+  b2 = analogRead(5);
   b3 = analogRead(4);
-  b4 = analogRead(5);
+  b4 = analogRead(3);
 }
